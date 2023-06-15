@@ -1,0 +1,25 @@
+{
+  "name": "visual-budgeting-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smsantini/visual-budgeting-backend.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP"
+  ],
+  "author": "Sophia Mishurny-Santini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smsantini/visual-budgeting-backend/issues"
+  },
+  "homepage": "https://github.com/smsantini/visual-budgeting-backend#readme"
+}
