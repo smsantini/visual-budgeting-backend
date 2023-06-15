@@ -16,13 +16,13 @@ const itemsController = (app) => {
 
     const updateItem = async (req, res) => {
         console.log("updating item");
-        const status = await dao.updateItem(req.params.rid, req.body);
+        const status = await dao.updateItem(req.params.iid, req.body.item);
         res.json(status);
     };
 
     const deleteItem = async (req, res) => {
         console.log("deleting item");
-        const status = await dao.deleteItem(req.params.rid);
+        const status = await dao.deleteItem(req.params.iid);
         res.json(status);
     };
 
