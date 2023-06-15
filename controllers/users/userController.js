@@ -7,16 +7,42 @@ const userController = (app) => {
         res.json(users);
     };
 
-    // const getUserById = async (req, res) => {
-    //     console.log("getting user");
-    //     const user = await dao.findAllUsers();
-    //     res.json(user);
-    // };
+    const login = async (req, res) => {
+        const username = req.body.username;
+        const password = req.body.password;
+        console.log("logging in for " + username);
+        const user = await dao.findUserByCredentials(username, password);
+        if (user) {
+            req.session["currentUser"] = user;
+            res.json(user);
+        } else {
+            res.sendStatus(404);
+        }
+    };
+
+    const findUserById = async (req, res) => {
+        console.log(req.params.uid);
+        console.log("finding user: " + req.params.uid);
+        const user = await dao.findUserById(req.params.uid);
+        if (user) {
+            return res.json(user);
+        } else res.sendStatus(404);
+    }
 
     const createUser = async (req, res) => {
         console.log("creating user");
-        //TODO: will need to add registration and security params
-        const newUser = await dao.createUser(req.body.user);
+        const username = req.body.username;
+        const email = req.body.email;
+        // check if user already exists by searching for username and email
+        let user = await dao.findUserByUserName(username);
+        if (!user) user = await dao.findUserByEmail(email);
+
+        if (user) {
+            res.sendStatus(409);
+            return;
+        }
+        const newUser = await dao.createUser(req.body);
+        req.session["currentUser"] = newUser;
         res.json(newUser);
     };
 
@@ -33,7 +59,8 @@ const userController = (app) => {
     };
 
     app.get("/api/users", getUsers);
-    app.get("/api/users/:uid", getUserById);
+    app.get("/api/users/login", login);
+    app.get("/api/users/profile/:uid", findUserById);
     app.post("/api/users/register", createUser);
     app.put("/api/users/update/:uid", updateUser);
     app.delete("/api/users/delete/:uid", deleteUser);
