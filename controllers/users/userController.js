@@ -1,11 +1,11 @@
 import * as dao from "./userDao.js";
 
 const userController = (app) => {
-    const getUsers = async (req, res) => {
-        console.log("getting all users");
-        const users = await dao.findAllUsers();
-        res.json(users);
-    };
+    // const getUsers = async (req, res) => {
+    //     console.log("getting all users");
+    //     const users = await dao.findAllUsers();
+    //     res.json(users);
+    // };
 
     const login = async (req, res) => {
         const username = req.body.username;
@@ -18,6 +18,11 @@ const userController = (app) => {
         } else {
             res.sendStatus(404);
         }
+    };
+
+    const logout = async (req, res) => {
+        req.session.destroy();
+        res.sendStatus(200);
     };
 
     const findUserById = async (req, res) => {
@@ -58,8 +63,9 @@ const userController = (app) => {
         res.json(status);
     };
 
-    app.get("/api/users", getUsers);
+    // app.get("/api/users", getUsers);
     app.get("/api/users/login", login);
+    app.get("/api/users/logout", logout);
     app.get("/api/users/profile/:uid", findUserById);
     app.post("/api/users/register", createUser);
     app.put("/api/users/update/:uid", updateUser);
