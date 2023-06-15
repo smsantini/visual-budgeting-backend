@@ -1,9 +1,9 @@
-import itemsController from "./controllers/items/itemsController.js";
 import session from "express-session";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
+import itemsController from "./controllers/items/itemsController.js";
 dotenv.config({ path: "../.env" });
 const db_string = process.env.CONNECTION_STRING;
 mongoose.connect(db_string);
